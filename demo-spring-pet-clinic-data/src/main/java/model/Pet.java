@@ -1,4 +1,4 @@
-package com.example.demo.spring.petclinic.model;
+package model;
 
 import lombok.Getter;
 import lombok.Setter;
