@@ -6,6 +6,12 @@
         <version>0.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <description>
+        This layer contains interfaces to allow web layer to abstract different
+        implementations for the data provider layer. In this example we will work
+        with a Map and a JPA provider to show how to retrieve data from different
+        repos based on necessity.
+    </description>
 
     <artifactId>demo-spring-pet-clinic-services</artifactId>
 
