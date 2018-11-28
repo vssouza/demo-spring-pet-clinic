@@ -4,7 +4,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>demo-spring-pet-clinic</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>demo-spring-pet-clinic-data</module>
         <module>demo-spring-pet-clinic-web</module>
