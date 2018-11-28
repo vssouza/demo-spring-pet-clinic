@@ -8,6 +8,7 @@
     <modules>
         <module>demo-spring-pet-clinic-data</module>
         <module>demo-spring-pet-clinic-web</module>
+        <module>demo-spring-pet-clinic-services</module>
     </modules>
     <packaging>pom</packaging>
 
