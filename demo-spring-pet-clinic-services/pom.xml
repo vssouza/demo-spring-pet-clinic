@@ -13,7 +13,7 @@
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>demo-spring-pet-clinic-data</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
