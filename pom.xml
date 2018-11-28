@@ -13,6 +13,13 @@
 
     <name>demo-spring-pet-clinic</name>
     <description>Demo custom project for Spring Pet Clinic</description>
+    <developers>
+        <developer>
+            <id>vssouza</id>
+            <email>vs.souza@gmail.com</email>
+            <url>https://github.com/vssouza/</url>
+        </developer>
+    </developers>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
