@@ -46,7 +46,7 @@
     </build>
 
     <scm>
-        <developerConnection>https://github.com/vssouza/demo-spring-pet-clinic.git</developerConnection>
+        <developerConnection>git@github.com:vssouza/demo-spring-pet-clinic.git</developerConnection>
         <tag>0.0.1</tag>
     </scm>
 </project>
