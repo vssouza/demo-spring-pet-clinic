@@ -4,7 +4,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>demo-spring-pet-clinic</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <modules>
         <module>demo-spring-pet-clinic-data</module>
         <module>demo-spring-pet-clinic-web</module>
@@ -47,6 +47,6 @@
 
     <scm>
         <developerConnection>scm:git:git@github.com:vssouza/demo-spring-pet-clinic.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>demo-spring-pet-clinic-0.0.2</tag>
     </scm>
 </project>
