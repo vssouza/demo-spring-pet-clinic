@@ -1,6 +1,6 @@
 package com.example.demo.spring.petclinic.service;
 
-import model.BaseEntity;
+import com.example.demo.spring.petclinic.model.BaseEntity;
 
 import java.util.Set;
 
