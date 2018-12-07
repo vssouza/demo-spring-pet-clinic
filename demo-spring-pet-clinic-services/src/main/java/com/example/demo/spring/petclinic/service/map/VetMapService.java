@@ -1,10 +1,11 @@
 package com.example.demo.spring.petclinic.service.map;
 
 import com.example.demo.spring.petclinic.model.Vet;
+import com.example.demo.spring.petclinic.service.VetService;
 
 import java.util.Set;
 
-public class VetMapService extends AbstractMapService<Vet, Long> {
+public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
 
     @Override
     public Vet findById(final Long id) {

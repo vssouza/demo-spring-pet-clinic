@@ -1,14 +1,13 @@
 package com.example.demo.spring.petclinic.service.map;
 
 import com.example.demo.spring.petclinic.model.BaseEntity;
-import com.example.demo.spring.petclinic.service.CRUDService;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class AbstractMapService<T extends BaseEntity, I> implements CRUDService<T, I> {
+public abstract class AbstractMapService<T extends BaseEntity, I> {
     protected final  Map<I, T> map;
 
     public AbstractMapService() {

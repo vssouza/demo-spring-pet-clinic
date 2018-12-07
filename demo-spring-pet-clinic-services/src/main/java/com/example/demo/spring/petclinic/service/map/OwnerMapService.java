@@ -1,10 +1,11 @@
 package com.example.demo.spring.petclinic.service.map;
 
 import com.example.demo.spring.petclinic.model.Owner;
+import com.example.demo.spring.petclinic.service.OwnerService;
 
 import java.util.Set;
 
-public class OwnerMapService extends AbstractMapService<Owner, Long> {
+public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
 
     @Override
     public Owner findById(final Long id) {
@@ -29,5 +30,10 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> {
     @Override
     public void delete(final Owner entity) {
         super.delete(entity);
+    }
+
+    @Override
+    public Owner findByLastName(String lastName) {
+        return null;
     }
 }
