@@ -2,13 +2,10 @@ package com.example.demo.spring.petclinic.service.map;
 
 import com.example.demo.spring.petclinic.model.BaseEntity;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public abstract class AbstractMapService<T extends BaseEntity, I> {
-    protected final  Map<I, T> map;
+public abstract class AbstractMapService<T extends BaseEntity, I extends Long> {
+    protected final  Map<Long, T> map;
 
     public AbstractMapService() {
         map = new HashMap<>();
@@ -22,9 +19,15 @@ public abstract class AbstractMapService<T extends BaseEntity, I> {
         return map.get(id);
     }
 
-    public T save(I id, T object) {
-        map.put(id, object);
-        return object;
+    public T save(T object) {
+        if(object != null) {
+            if(object.isNew()) {
+                object.setId(getNextId());
+            }
+            map.put(object.getId(), object);
+            return object;
+        }
+        throw new RuntimeException("Object cannot be null.");
     }
 
     public void deleteById(I id) {
@@ -34,5 +37,13 @@ public abstract class AbstractMapService<T extends BaseEntity, I> {
     public void delete(T object) {
         // map.entrySet().removeIf(entry -> entry.getValue().equals(object));
         map.remove(object);
+    }
+
+    private synchronized Long getNextId() {
+        try {
+            return Collections.max(map.keySet()) + 1;
+        } catch(NoSuchElementException ex) {
+            return 1L;
+        }
     }
 }

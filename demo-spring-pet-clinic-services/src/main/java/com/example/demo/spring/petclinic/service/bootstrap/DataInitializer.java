@@ -26,27 +26,25 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        ownerService.save(createOwner(1L, "Vinicius", "Yamauchi"));
-        ownerService.save(createOwner(2L, "Bruno", "Noda"));
+        ownerService.save(createOwner("Vinicius", "Yamauchi"));
+        ownerService.save(createOwner("Bruno", "Noda"));
         logger.info("Loaded initial data for Owners...");
 
-        vetService.save(createVet(1L, "Samwise", "Gangi"));
-        vetService.save(createVet(2L, "Frodo", "Baggins"));
+        vetService.save(createVet("Samwise", "Gangi"));
+        vetService.save(createVet("Frodo", "Baggins"));
         logger.info("Loaded initial data for Vets...");
 
     }
 
-    private Owner createOwner(final long id, final String firstName, final String lastName) {
+    private Owner createOwner(final String firstName, final String lastName) {
         Owner owner = new Owner();
-        owner.setId(id);
         owner.setFirstName(firstName);
         owner.setLastName(lastName);
         return owner;
     }
 
-    private Vet createVet(final long id, final String firstName, final String lastName) {
+    private Vet createVet(final String firstName, final String lastName) {
         Vet vet = new Vet();
-        vet.setId(id);
         vet.setFirstName(firstName);
         vet.setLastName(lastName);
         return vet;
