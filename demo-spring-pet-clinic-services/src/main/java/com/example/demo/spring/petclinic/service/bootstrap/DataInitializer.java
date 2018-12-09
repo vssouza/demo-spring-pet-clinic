@@ -4,10 +4,9 @@ import com.example.demo.spring.petclinic.model.Owner;
 import com.example.demo.spring.petclinic.model.Vet;
 import com.example.demo.spring.petclinic.service.OwnerService;
 import com.example.demo.spring.petclinic.service.VetService;
-import com.example.demo.spring.petclinic.service.map.OwnerMapService;
-import com.example.demo.spring.petclinic.service.map.VetMapService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +17,10 @@ public class DataInitializer implements CommandLineRunner {
     private final VetService vetService;
     private static Logger logger = LoggerFactory.getLogger(DataInitializer.class.getName());
 
-
-    public DataInitializer() {
-        ownerService = new OwnerMapService();
-        vetService = new VetMapService();
+    @Autowired
+    public DataInitializer(OwnerService ownerService, VetService vetService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override
