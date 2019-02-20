@@ -1,44 +1,24 @@
 package com.example.demo.spring.petclinic.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.HashSet;
 import java.util.Set;
 
 public class Owner extends Person {
 
+    @Getter @Setter
     private String address;
+    @Getter @Setter
     private String city;
+    @Getter @Setter
     private String telephone;
+    @Getter @Setter
     private Set<Pet> pets;
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public Set<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(Set<Pet> pets) {
-        this.pets = pets;
+    public Owner() {
+        pets = new HashSet<>();
     }
 
 }

@@ -13,4 +13,7 @@ public class Pet extends BaseEntity{
     private Owner owner;
     @Getter @Setter
     private PetType petType;
+    @Getter @Setter
+    private String name;
+
 }

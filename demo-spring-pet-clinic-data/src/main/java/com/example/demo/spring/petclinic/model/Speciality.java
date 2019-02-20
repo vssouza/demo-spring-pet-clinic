@@ -1,14 +1,11 @@
 package com.example.demo.spring.petclinic.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Speciality extends BaseEntity {
 
+    @Getter @Setter
     private String description;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
