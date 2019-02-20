@@ -1,8 +1,10 @@
 package com.example.demo.spring.petclinic.service.bootstrap;
 
 import com.example.demo.spring.petclinic.model.Owner;
+import com.example.demo.spring.petclinic.model.PetType;
 import com.example.demo.spring.petclinic.model.Vet;
 import com.example.demo.spring.petclinic.service.OwnerService;
+import com.example.demo.spring.petclinic.service.PetTypeService;
 import com.example.demo.spring.petclinic.service.VetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +17,14 @@ public class DataInitializer implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
     private static Logger logger = LoggerFactory.getLogger(DataInitializer.class.getName());
 
     @Autowired
-    public DataInitializer(OwnerService ownerService, VetService vetService) {
+    public DataInitializer(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
@@ -33,6 +37,10 @@ public class DataInitializer implements CommandLineRunner {
         vetService.save(createVet("Samwise", "Gangi"));
         vetService.save(createVet("Frodo", "Baggins"));
         logger.info("Loaded initial data for Vets...");
+
+        petTypeService.save(createPetType("Dog"));
+        petTypeService.save(createPetType("Cat"));
+        logger.info("Loaded initial data for Pet Types...");
 
     }
 
@@ -48,6 +56,12 @@ public class DataInitializer implements CommandLineRunner {
         vet.setFirstName(firstName);
         vet.setLastName(lastName);
         return vet;
+    }
+
+    private PetType createPetType(final String name) {
+        PetType petType = new PetType();
+        petType.setName(name);
+        return petType;
     }
 
 }
