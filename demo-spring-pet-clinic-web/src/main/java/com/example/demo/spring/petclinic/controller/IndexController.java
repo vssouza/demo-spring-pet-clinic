@@ -10,4 +10,9 @@ public class IndexController {
     public String showIndex() {
         return "index";
     }
+
+    @RequestMapping({"oups", "/owners/find"})
+    public String showErrorPlaceholder() {
+        return "notimplemented";
+    }
 }
