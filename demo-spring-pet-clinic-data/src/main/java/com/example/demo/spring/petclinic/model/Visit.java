@@ -21,6 +21,7 @@ public class Visit extends BaseEntity {
     private String description;
 
     @ManyToOne
+    //@MapsId
     @JoinColumn(name = "pet_id")
     @Getter @Setter
     private Pet pet;
