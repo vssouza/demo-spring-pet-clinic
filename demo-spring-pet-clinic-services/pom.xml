@@ -21,6 +21,12 @@
             <artifactId>demo-spring-pet-clinic-data</artifactId>
             <version>0.0.4-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

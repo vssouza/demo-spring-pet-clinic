@@ -3,6 +3,8 @@ package com.example.demo.spring.petclinic.service.map;
 import com.example.demo.spring.petclinic.model.Vet;
 import com.example.demo.spring.petclinic.service.SpecialityService;
 import com.example.demo.spring.petclinic.service.VetService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +12,11 @@ import java.util.Set;
 
 @Service
 @Profile({"default", "Map"})
+@RequiredArgsConstructor
 public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
 
+    @NonNull
     private SpecialityService specialityService;
-
-    public VetMapService(SpecialityService specialityService) {
-        this.specialityService = specialityService;
-    }
 
     @Override
     public Vet findById(final Long id) {

@@ -3,6 +3,8 @@ package com.example.demo.spring.petclinic.service.jpa;
 import com.example.demo.spring.petclinic.model.PetType;
 import com.example.demo.spring.petclinic.repository.PetTypeRepository;
 import com.example.demo.spring.petclinic.service.PetTypeService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,11 @@ import java.util.Set;
 
 @Service
 @Profile("JPA")
+@RequiredArgsConstructor
 public class PetTypeJpaService implements PetTypeService {
 
+    @NonNull
     private final PetTypeRepository petTypeRepository;
-
-    public PetTypeJpaService(final PetTypeRepository petTypeRepository) {
-        this.petTypeRepository = petTypeRepository;
-    }
 
     @Override
     public PetType findById(final Long id) {

@@ -3,6 +3,8 @@ package com.example.demo.spring.petclinic.service.jpa;
 import com.example.demo.spring.petclinic.model.Speciality;
 import com.example.demo.spring.petclinic.repository.SpecialityRepository;
 import com.example.demo.spring.petclinic.service.SpecialityService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,11 @@ import java.util.Set;
 
 @Service
 @Profile("JPA")
+@RequiredArgsConstructor
 public class SpecialityJpaService implements SpecialityService {
 
+    @NonNull
     private final SpecialityRepository specialityRepository;
-
-    public SpecialityJpaService(SpecialityRepository specialityRepository) {
-        this.specialityRepository = specialityRepository;
-    }
 
     @Override
     public Speciality findById(final Long id) {
