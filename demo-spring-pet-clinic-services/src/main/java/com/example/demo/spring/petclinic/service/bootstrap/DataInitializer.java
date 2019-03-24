@@ -1,10 +1,7 @@
 package com.example.demo.spring.petclinic.service.bootstrap;
 
 import com.example.demo.spring.petclinic.model.*;
-import com.example.demo.spring.petclinic.service.OwnerService;
-import com.example.demo.spring.petclinic.service.PetTypeService;
-import com.example.demo.spring.petclinic.service.SpecialityService;
-import com.example.demo.spring.petclinic.service.VetService;
+import com.example.demo.spring.petclinic.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -20,14 +18,17 @@ public class DataInitializer implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
     private static Logger logger = LoggerFactory.getLogger(DataInitializer.class.getName());
 
     @Autowired
-    public DataInitializer(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
+    public DataInitializer(final OwnerService ownerService, final VetService vetService, final PetTypeService petTypeService,
+                           final SpecialityService specialityService, final VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -39,8 +40,8 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void loadInMemoryData() {
-        Speciality radiology = createSpeciality("Radiology");
-        Speciality surgery = createSpeciality("Surgery");
+        Speciality radiology = specialityService.save(createSpeciality("Radiology"));
+        Speciality surgery = specialityService.save(createSpeciality("Surgery"));
         Speciality dentistry = specialityService.save(createSpeciality("Dentistry"));
 
         vetService.save(createVet("Samwise", "Gangi", radiology, surgery));
@@ -55,11 +56,27 @@ public class DataInitializer implements CommandLineRunner {
         Pet harley = createPet("Harley", LocalDate.of(2016, 07, 23),  catType);
         Pet minho = createPet("Minho", LocalDate.of(2017, 03, 12), dogType);
         Pet doe = createPet("Doe", LocalDate.of(2019, 11,15), dogType);
-        logger.info("Loaded initial data for Pets...");
 
         ownerService.save(createOwner("Vinicius", "Yamauchi", "Hophill vale", "Tullamore", harley, minho));
         ownerService.save(createOwner("Bruno", "Noda", "Onze de Junho", "Sao Paulo", doe));
         logger.info("Loaded initial data for Owners...");
+        logger.info("Loaded initial data for Pets...");
+
+        visitService.save(createVisit(harley, LocalDate.of(2019, Month.DECEMBER, 8), "Annual Checkup."));
+        visitService.save(createVisit(minho, LocalDate.of(2019, Month.APRIL, 13), "Acunpucture session"));
+        visitService.save(createVisit(minho, LocalDate.of(2019, Month.MAY, 13), "Acunpucture session"));
+        visitService.save(createVisit(minho, LocalDate.of(2019, Month.JUNE, 13), "Acunpucture session"));
+        visitService.save(createVisit(doe, LocalDate.of(2019, Month.SEPTEMBER, 21), "Surgery"));
+        visitService.save(createVisit(doe, LocalDate.of(2019, Month.NOVEMBER, 25), "Checkup"));
+        logger.info("Loaded initial data for Visits...");
+    }
+
+    private Visit createVisit(final Pet pet, final LocalDate date, final String description) {
+        Visit visit = new Visit();
+        visit.setPet(pet);
+        visit.setDate(date);
+        visit.setDescription(description);
+        return visit;
     }
 
     private Speciality createSpeciality(final String description) {
