@@ -2,6 +2,8 @@ package com.example.demo.spring.petclinic.service.bootstrap;
 
 import com.example.demo.spring.petclinic.model.*;
 import com.example.demo.spring.petclinic.service.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.slf4j.SLF4JLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.time.LocalDate;
 import java.time.Month;
 
 @Component
+@Slf4j
 public class DataInitializer implements CommandLineRunner {
 
     private final OwnerService ownerService;
@@ -19,7 +22,6 @@ public class DataInitializer implements CommandLineRunner {
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
-    private static Logger logger = LoggerFactory.getLogger(DataInitializer.class.getName());
 
     @Autowired
     public DataInitializer(final OwnerService ownerService, final VetService vetService, final PetTypeService petTypeService,
@@ -47,11 +49,11 @@ public class DataInitializer implements CommandLineRunner {
         vetService.save(createVet("Samwise", "Gangi", radiology, surgery));
         vetService.save(createVet("Frodo", "Baggins", surgery, dentistry));
         vetService.save(createVet("Merry", "Peppins"));
-        logger.info("Loaded initial data for Vets...");
+        log.info("Loaded initial data for Vets...");
 
         PetType dogType = petTypeService.save(createPetType("Dog"));
         PetType catType = petTypeService.save(createPetType("Cat"));
-        logger.info("Loaded initial data for Pet Types...");
+        log.info("Loaded initial data for Pet Types...");
 
         Pet harley = createPet("Harley", LocalDate.of(2016, 07, 23),  catType);
         Pet minho = createPet("Minho", LocalDate.of(2017, 03, 12), dogType);
@@ -59,8 +61,8 @@ public class DataInitializer implements CommandLineRunner {
 
         ownerService.save(createOwner("Vinicius", "Yamauchi", "Hophill vale", "Tullamore", harley, minho));
         ownerService.save(createOwner("Bruno", "Noda", "Onze de Junho", "Sao Paulo", doe));
-        logger.info("Loaded initial data for Owners...");
-        logger.info("Loaded initial data for Pets...");
+        log.info("Loaded initial data for Owners...");
+        log.info("Loaded initial data for Pets...");
 
         visitService.save(createVisit(harley, LocalDate.of(2019, Month.DECEMBER, 8), "Annual Checkup."));
         visitService.save(createVisit(minho, LocalDate.of(2019, Month.APRIL, 13), "Acunpucture session"));
@@ -68,7 +70,7 @@ public class DataInitializer implements CommandLineRunner {
         visitService.save(createVisit(minho, LocalDate.of(2019, Month.JUNE, 13), "Acunpucture session"));
         visitService.save(createVisit(doe, LocalDate.of(2019, Month.SEPTEMBER, 21), "Surgery"));
         visitService.save(createVisit(doe, LocalDate.of(2019, Month.NOVEMBER, 25), "Checkup"));
-        logger.info("Loaded initial data for Visits...");
+        log.info("Loaded initial data for Visits...");
     }
 
     private Visit createVisit(final Pet pet, final LocalDate date, final String description) {
