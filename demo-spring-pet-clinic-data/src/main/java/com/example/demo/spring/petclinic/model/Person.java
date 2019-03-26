@@ -1,12 +1,14 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-@Data
+@Getter
+@Setter
 class Person extends BaseEntity {
 
     @Column(name = "first_name")

@@ -1,6 +1,7 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,7 +9,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "visits")
-@Data
+@Getter
+@Setter
 public class Visit extends BaseEntity {
 
     @Column(name = "date")

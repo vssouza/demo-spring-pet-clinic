@@ -1,6 +1,7 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,7 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "pets")
-@Data
+@Getter
+@Setter
 public class Pet extends BaseEntity{
 
     @Column(name = "birth_date")
