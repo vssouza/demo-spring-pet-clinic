@@ -1,5 +1,7 @@
 package com.example.demo.spring.petclinic.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +13,8 @@ import java.util.Set;
 @Table(name = "owners")
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
 public class Owner extends Person {
 
     @Column(name = "address")
