@@ -1,7 +1,6 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,10 +8,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table
+@Data
 public class PetType extends BaseEntity {
 
     @Column(name = "name")
-
-    @Getter @Setter
     private String name;
 }

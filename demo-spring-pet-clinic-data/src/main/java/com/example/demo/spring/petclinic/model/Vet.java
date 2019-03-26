@@ -1,7 +1,6 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,11 +8,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "vets")
+@Data
 public class Vet extends Person{
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"), inverseJoinColumns = @JoinColumn(name = "speciality_id"))
-    @Getter @Setter
     private Set<Speciality> specialities;
 
     public Vet() {
