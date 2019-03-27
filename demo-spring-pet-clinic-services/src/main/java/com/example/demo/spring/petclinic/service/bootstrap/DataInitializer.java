@@ -85,11 +85,12 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private Owner createOwner(final String firstName, final String lastName, final String address, final String city, final Pet... pets) {
-        Owner owner = new Owner();
-        owner.setFirstName(firstName);
-        owner.setLastName(lastName);
-        owner.setAddress(address);
-        owner.setCity(city);
+        Owner owner = Owner.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .address(address)
+                .city(city)
+                .build();
         for(Pet pet : pets) {
             owner.getPets().add(pet);
         }

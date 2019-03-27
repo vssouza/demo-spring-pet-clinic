@@ -1,6 +1,8 @@
 package com.example.demo.spring.petclinic.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,8 @@ import java.io.Serializable;
 @MappedSuperclass
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 2493833670365380258L;

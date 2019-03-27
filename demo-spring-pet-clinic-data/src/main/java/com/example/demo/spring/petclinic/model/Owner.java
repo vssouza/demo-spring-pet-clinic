@@ -1,9 +1,9 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,9 +13,17 @@ import java.util.Set;
 @Table(name = "owners")
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
 public class Owner extends Person {
+
+    @Builder
+    public Owner(final Long id, final String firstName, final String lastName, final String address,
+                 final String city, final String telephone, final Set<Pet> pets) {
+        super(id, firstName, lastName);
+        this.address = address;
+        this.city = city;
+        this.telephone = telephone;
+        this.pets = pets == null ? new HashSet<>() : pets;
+    }
 
     @Column(name = "address")
     private String address;
@@ -27,10 +35,6 @@ public class Owner extends Person {
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @Singular
     private Set<Pet> pets;
-
-    public Owner() {
-        pets = new HashSet<>();
-    }
-
 }
