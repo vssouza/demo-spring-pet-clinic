@@ -2,8 +2,6 @@ package com.example.demo.spring.petclinic.service.jpa;
 
 import com.example.demo.spring.petclinic.model.Owner;
 import com.example.demo.spring.petclinic.repository.OwnerRepository;
-import com.example.demo.spring.petclinic.repository.PetRepository;
-import com.example.demo.spring.petclinic.repository.PetTypeRepository;
 import com.example.demo.spring.petclinic.service.OwnerService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +18,6 @@ public class OwnerJpaService implements OwnerService {
 
     @NonNull
     private final OwnerRepository ownerRepository;
-    @NonNull
-    private final PetRepository petRepository;
-    @NonNull
-    private final PetTypeRepository petTypeRepository;
 
     @Override
     public Owner findByLastName(final String lastName) {

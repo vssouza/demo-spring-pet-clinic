@@ -36,6 +36,13 @@
         <start-class>com.example.demo.spring.petclinic.DemoSpringPetClinicApplication</start-class>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
