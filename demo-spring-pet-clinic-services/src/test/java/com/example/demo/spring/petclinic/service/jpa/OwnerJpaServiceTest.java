@@ -1,8 +1,15 @@
 package com.example.demo.spring.petclinic.service.jpa;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockitoAnnotations;
 
 public class OwnerJpaServiceTest {
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void findByLastName() {
