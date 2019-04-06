@@ -35,8 +35,7 @@ public abstract class AbstractMapService<T extends BaseEntity, I extends Long> {
     }
 
     public void delete(T object) {
-        // map.entrySet().removeIf(entry -> entry.getValue().equals(object));
-        map.remove(object);
+        map.entrySet().removeIf(entry -> entry.getValue().equals(object));
     }
 
     private synchronized Long getNextId() {

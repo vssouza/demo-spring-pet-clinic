@@ -1,8 +1,7 @@
 package com.example.demo.spring.petclinic.service.map;
 
 import com.example.demo.spring.petclinic.model.Owner;
-import com.example.demo.spring.petclinic.repository.OwnerRepository;
-import com.example.demo.spring.petclinic.service.jpa.OwnerJpaService;
+import com.example.demo.spring.petclinic.model.Pet;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -10,10 +9,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Set;
 
-import static java.util.Optional.ofNullable;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 public class OwnerMapServiceTest {
 
@@ -23,24 +20,30 @@ public class OwnerMapServiceTest {
     private static final String SECOND_OWNER_FIRST_NAME = "Bruno";
     private static final String SECOND_OWNER_LAST_NAME = "Noda";
 
+    private static final String THIRD_OWNER_FIRST_NAME = "Alexandre";
+    private static final String THIRD_OWNER_LAST_NAME = "Arantes";
+
 
     @Mock
     private Owner firstMockOwner;
     @Mock
     private Owner secondMockOwner;
     @Mock
-    private Set<Owner> owners;
-
+    private Owner thirdOwner;
     @Mock
-    private OwnerRepository ownerRepository;
-    private OwnerJpaService ownerJpaService;
+    private PetTypeMapService petTypeService;
+    @Mock
+    private PetMapService petService;
+    @Mock
+    private Set<Pet> pets;
+
+    private OwnerMapService ownerMapService;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        ownerJpaService = new OwnerJpaService(ownerRepository);
+        ownerMapService = new OwnerMapService(petTypeService, petService);
         createOwnerMocks();
-        createOwnerRepositoryMocks();
         createOwners();
     }
 
@@ -48,66 +51,77 @@ public class OwnerMapServiceTest {
         when(firstMockOwner.getId()).thenReturn(1L);
         when(firstMockOwner.getFirstName()).thenReturn(FIRST_OWNER_FIRST_NAME);
         when(firstMockOwner.getLastName()).thenReturn(FIRST_OWNER_LAST_NAME);
+        when(firstMockOwner.getPets()).thenReturn(pets);
+        when(pets.isEmpty()).thenReturn(false);
 
         when(secondMockOwner.getId()).thenReturn(2L);
         when(secondMockOwner.getFirstName()).thenReturn(SECOND_OWNER_FIRST_NAME);
         when(secondMockOwner.getLastName()).thenReturn(SECOND_OWNER_LAST_NAME);
-    }
+        when(secondMockOwner.getPets()).thenReturn(pets);
+        when(pets.isEmpty()).thenReturn(false);
 
-    private void createOwnerRepositoryMocks() {
-        when(ownerRepository.findByLastName(FIRST_OWNER_LAST_NAME)).thenReturn(firstMockOwner);
-        when(ownerRepository.findByLastName(SECOND_OWNER_LAST_NAME)).thenReturn(secondMockOwner);
-        when(ownerRepository.findById(1L)).thenReturn(ofNullable(firstMockOwner));
-        when(ownerRepository.findById(2L)).thenReturn(ofNullable(secondMockOwner));
-        when(ownerRepository.findById(3L)).thenReturn(ofNullable(null));
-        when(ownerRepository.findAll()).thenReturn(owners);
+        when(thirdOwner.getId()).thenReturn(3L);
+        when(thirdOwner.getFirstName()).thenReturn(THIRD_OWNER_FIRST_NAME);
+        when(thirdOwner.getLastName()).thenReturn(THIRD_OWNER_LAST_NAME);
+        when(thirdOwner.getPets()).thenReturn(pets);
+        when(pets.isEmpty()).thenReturn(false);
     }
 
     private void createOwners() {
-        owners.add(firstMockOwner);
-        owners.add(secondMockOwner);
+        ownerMapService.save(firstMockOwner);
+        ownerMapService.save(secondMockOwner);
     }
 
     @Test
     public void findById() {
-        Owner firstOwner = ownerJpaService.findById(1L);
+        Owner firstOwner = ownerMapService.findById(1L);
         assertEquals(FIRST_OWNER_FIRST_NAME, firstOwner.getFirstName());
 
-        Owner secondOwner = ownerJpaService.findById(2L);
+        Owner secondOwner = ownerMapService.findById(2L);
         assertEquals(SECOND_OWNER_FIRST_NAME, secondOwner.getFirstName());
 
-        Owner nullOwner = ownerJpaService.findById(3L);
+        Owner nullOwner = ownerMapService.findById(3L);
         assertNull(nullOwner);
 
-        verify(ownerRepository, times(1)).findById(1L);
     }
 
     @Test
     public void save() {
+        ownerMapService.save(thirdOwner);
+        assertEquals(3, ownerMapService.findAll().size());
+        assertEquals(THIRD_OWNER_LAST_NAME, ownerMapService.findById(3L).getLastName());
     }
 
     @Test
     public void findAll() {
+        Set<Owner> owners = ownerMapService.findAll();
+        assertEquals(2, owners.size());
+        assertTrue(owners.contains(firstMockOwner));
+        assertTrue(owners.contains(secondMockOwner));
     }
 
     @Test
     public void deleteById() {
+        ownerMapService.deleteById(1L);
+        assertEquals(1, ownerMapService.findAll().size());
+        assertFalse(ownerMapService.findAll().contains(firstMockOwner));
     }
 
     @Test
     public void delete() {
+        ownerMapService.delete(secondMockOwner);
+        assertEquals(1, ownerMapService.findAll().size());
+        assertFalse(ownerMapService.findAll().contains(secondMockOwner));
     }
 
     @Test
     public void findByLastName() {
-        Owner firstOwner = ownerJpaService.findByLastName(FIRST_OWNER_LAST_NAME);
+        Owner firstOwner = ownerMapService.findByLastName(FIRST_OWNER_LAST_NAME);
         assertEquals(FIRST_OWNER_LAST_NAME, firstOwner.getLastName());
         assertEquals(FIRST_OWNER_FIRST_NAME, firstOwner.getFirstName());
 
-        Owner secondOwner = ownerJpaService.findByLastName(SECOND_OWNER_LAST_NAME);
+        Owner secondOwner = ownerMapService.findByLastName(SECOND_OWNER_LAST_NAME);
         assertEquals(SECOND_OWNER_FIRST_NAME, secondOwner.getFirstName());
         assertEquals(SECOND_OWNER_LAST_NAME, secondOwner.getLastName());
-
-        verify(ownerRepository, times(1)).findByLastName(FIRST_OWNER_LAST_NAME);
     }
 }
