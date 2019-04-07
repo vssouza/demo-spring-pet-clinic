@@ -23,6 +23,9 @@ public class OwnerMapServiceTest {
     private static final String THIRD_OWNER_FIRST_NAME = "Alexandre";
     private static final String THIRD_OWNER_LAST_NAME = "Arantes";
 
+    private static final String NULL_ID_FIRST_NAME = "Alexandre";
+    private static final String NULL_ID_LAST_NAME = "Arantes";
+
 
     @Mock
     private Owner firstMockOwner;
@@ -30,6 +33,8 @@ public class OwnerMapServiceTest {
     private Owner secondMockOwner;
     @Mock
     private Owner thirdOwner;
+    @Mock
+    private Owner nullOwner;
     @Mock
     private PetTypeMapService petTypeService;
     @Mock
@@ -65,6 +70,11 @@ public class OwnerMapServiceTest {
         when(thirdOwner.getLastName()).thenReturn(THIRD_OWNER_LAST_NAME);
         when(thirdOwner.getPets()).thenReturn(pets);
         when(pets.isEmpty()).thenReturn(false);
+
+        when(nullOwner.getFirstName()).thenReturn(NULL_ID_FIRST_NAME);
+        when(nullOwner.getLastName()).thenReturn(NULL_ID_LAST_NAME);
+        when(nullOwner.getPets()).thenReturn(pets);
+        when(pets.isEmpty()).thenReturn(false);
     }
 
     private void createOwners() {
@@ -93,6 +103,21 @@ public class OwnerMapServiceTest {
     }
 
     @Test
+    public void saveExistingOwner() {
+        ownerMapService.save(secondMockOwner);
+        assertEquals(2, ownerMapService.findAll().size());
+        assertEquals(SECOND_OWNER_LAST_NAME, ownerMapService.findById(2L).getLastName());
+    }
+
+    @Test
+    public void saveNullIdOwner() {
+        Owner owner = ownerMapService.save(nullOwner);
+        assertEquals(3, ownerMapService.findAll().size());
+        assertNotNull(owner.getId());
+        assertNotNull(owner);
+    }
+
+    @Test
     public void findAll() {
         Set<Owner> owners = ownerMapService.findAll();
         assertEquals(2, owners.size());
@@ -109,7 +134,7 @@ public class OwnerMapServiceTest {
 
     @Test
     public void delete() {
-        ownerMapService.delete(secondMockOwner);
+        ownerMapService.delete(ownerMapService.findById(2L));
         assertEquals(1, ownerMapService.findAll().size());
         assertFalse(ownerMapService.findAll().contains(secondMockOwner));
     }
