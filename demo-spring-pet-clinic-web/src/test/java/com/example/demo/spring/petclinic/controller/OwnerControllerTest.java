@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -55,6 +56,8 @@ public class OwnerControllerTest {
                 .andExpect(status().isOk())
         .andExpect(view().name("owners/index"))
         .andExpect(model().attribute("owners", hasSize(2)));
+
+        verify(ownerService).findAll();
 
     }
 }
