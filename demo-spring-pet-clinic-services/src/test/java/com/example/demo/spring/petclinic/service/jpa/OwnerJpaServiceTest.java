@@ -95,10 +95,11 @@ public class OwnerJpaServiceTest {
         assertEquals(2, searchOwners.size());
     }
 
+    // default for verify is 1 time
     @Test
     public void delete() {
         ownerJpaService.delete(owner1);
-        verify(ownerRepository, times(1)).delete(any());
+        verify(ownerRepository).delete(any());
     }
 
     @Test
