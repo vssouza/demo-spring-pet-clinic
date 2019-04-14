@@ -60,6 +60,13 @@
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
             </plugin>
+            <!-- fix for circle ci surefire error -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
