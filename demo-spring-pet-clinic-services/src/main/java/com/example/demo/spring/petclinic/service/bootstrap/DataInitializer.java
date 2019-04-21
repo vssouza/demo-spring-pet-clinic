@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @Slf4j
@@ -19,15 +22,17 @@ public class DataInitializer implements CommandLineRunner {
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
+    private final PetService petService;
 
     @Autowired
     public DataInitializer(final OwnerService ownerService, final VetService vetService, final PetTypeService petTypeService,
-                           final SpecialityService specialityService, final VisitService visitService) {
+                           final SpecialityService specialityService, final VisitService visitService, final PetService petService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
         this.visitService = visitService;
+        this.petService = petService;
     }
 
     @Override
@@ -85,16 +90,16 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private Owner createOwner(final String firstName, final String lastName, final String address, final String city, final String telephone, final Pet... pets) {
+        Set<Pet> petSet = new HashSet<>();
+        Arrays.stream(pets).forEach(petSet::add);
         Owner owner = Owner.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .address(address)
                 .city(city)
                 .telephone(telephone)
+                .pets(petSet)
                 .build();
-        for(Pet pet : pets) {
-            owner.getPets().add(pet);
-        }
         return owner;
     }
 

@@ -3,6 +3,7 @@ package com.example.demo.spring.petclinic.service.jpa;
 import com.example.demo.spring.petclinic.model.Owner;
 import com.example.demo.spring.petclinic.repository.OwnerRepository;
 import com.example.demo.spring.petclinic.service.OwnerService;
+import com.example.demo.spring.petclinic.service.PetService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -19,6 +20,9 @@ public class OwnerJpaService implements OwnerService {
     @NonNull
     private final OwnerRepository ownerRepository;
 
+    @NonNull
+    private final PetService petService;
+
     @Override
     public Owner findByLastName(final String lastName) {
         return ownerRepository.findByLastName(lastName);
@@ -31,7 +35,13 @@ public class OwnerJpaService implements OwnerService {
 
     @Override
     public Owner save(final Owner owner) {
-        return ownerRepository.save(owner);
+        Owner savedOwner = ownerRepository.save(owner);
+        owner.getPets().stream()
+                .forEach(pet -> {
+                    pet.setOwner(savedOwner);
+                    petService.save(pet);
+                });
+        return savedOwner;
     }
 
     @Override
