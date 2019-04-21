@@ -1,9 +1,6 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Singular;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,6 +10,7 @@ import java.util.Set;
 @Table(name = "owners")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Owner extends Person {
 
     @Builder

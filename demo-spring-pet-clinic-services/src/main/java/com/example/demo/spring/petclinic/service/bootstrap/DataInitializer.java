@@ -56,8 +56,8 @@ public class DataInitializer implements CommandLineRunner {
         Pet minho = createPet("Minho", LocalDate.of(2017, 03, 12), dogType);
         Pet doe = createPet("Doe", LocalDate.of(2019, 11,15), dogType);
 
-        ownerService.save(createOwner("Vinicius", "Yamauchi", "Hophill vale", "Tullamore", harley, minho));
-        ownerService.save(createOwner("Bruno", "Noda", "Onze de Junho", "Sao Paulo", doe));
+        ownerService.save(createOwner("Vinicius", "Yamauchi", "Hophill vale", "Tullamore", "+353 83 359-8177", harley, minho));
+        ownerService.save(createOwner("Bruno", "Noda", "Onze de Junho", "Sao Paulo", "+55 11 99965-4323", doe));
         log.info("Loaded initial data for Owners...");
         log.info("Loaded initial data for Pets...");
 
@@ -84,12 +84,13 @@ public class DataInitializer implements CommandLineRunner {
         return speciality;
     }
 
-    private Owner createOwner(final String firstName, final String lastName, final String address, final String city, final Pet... pets) {
+    private Owner createOwner(final String firstName, final String lastName, final String address, final String city, final String telephone, final Pet... pets) {
         Owner owner = Owner.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .address(address)
                 .city(city)
+                .telephone(telephone)
                 .build();
         for(Pet pet : pets) {
             owner.getPets().add(pet);
