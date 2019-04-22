@@ -35,4 +35,12 @@ public class Owner extends Person {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "owner")
     @Singular
     private Set<Pet> pets;
+
+    public Pet getPet(final String petName, final boolean ignoreNew) {
+        return pets.stream()
+                .filter(pet ->ignoreNew || !pet.isNew())
+                .filter(pet -> pet.getName().equalsIgnoreCase(petName))
+                .findFirst()
+                .orElse(null);
+    }
 }

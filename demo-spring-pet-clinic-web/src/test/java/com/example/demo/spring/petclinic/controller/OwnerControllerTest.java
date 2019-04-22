@@ -20,6 +20,7 @@ import java.util.Set;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -82,7 +83,7 @@ public class OwnerControllerTest {
         mockMvc.perform(get("/owners").param("lastName", "NoName"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/findOwners"))
-                .andExpect(model().hasErrors());
+                .andExpect(model().attributeHasErrors("owner"));
 
         verify(ownerService).findByLastNameLike(anyString());
     }
@@ -111,7 +112,7 @@ public class OwnerControllerTest {
 
     @Test
     public void processCreationForm() throws Exception {
-        when(ownerService.save(ArgumentMatchers.any())).thenReturn(Owner.builder().id(1l).build());
+        when(ownerService.save(any())).thenReturn(Owner.builder().id(1l).build());
 
         mockMvc.perform(post("/owners/new"))
                 .andExpect(status().is3xxRedirection())
@@ -135,7 +136,8 @@ public class OwnerControllerTest {
 
     @Test
     public void processUpdateForm() throws Exception {
-        when(ownerService.save(ArgumentMatchers.any())).thenReturn(Owner.builder().id(1l).build());
+        when(ownerService.save(any())).thenReturn(Owner.builder().id(1l).pets(Collections.EMPTY_SET).build());
+        when(ownerService.findById(anyLong())).thenReturn(Owner.builder().id(1l).pets(Collections.EMPTY_SET).build());
 
         mockMvc.perform(post("/owners/1/edit"))
                 .andExpect(status().is3xxRedirection())
