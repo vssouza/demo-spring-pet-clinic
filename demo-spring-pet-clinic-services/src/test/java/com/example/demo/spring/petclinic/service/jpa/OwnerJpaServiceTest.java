@@ -2,13 +2,15 @@ package com.example.demo.spring.petclinic.service.jpa;
 
 import com.example.demo.spring.petclinic.model.Owner;
 import com.example.demo.spring.petclinic.repository.OwnerRepository;
+import com.example.demo.spring.petclinic.service.OwnerService;
+import com.example.demo.spring.petclinic.service.PetService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -32,12 +34,14 @@ public class OwnerJpaServiceTest {
     private Owner owner1;
     @Mock
     private Owner owner2;
+    @Mock
+    private PetService petService;
 
-    @InjectMocks
-    private OwnerJpaService ownerJpaService;
+    private OwnerService ownerJpaService;
 
     @Before
     public void setup() {
+        ownerJpaService = new OwnerJpaService(ownerRepository, petService);
         when(owner1.getId()).thenReturn(1L);
         when(owner1.getFirstName()).thenReturn(FIRST_OWNER_FIRST_NAME);
         when(owner1.getLastName()).thenReturn(FIRST_OWNER_LAST_NAME);
@@ -49,10 +53,12 @@ public class OwnerJpaServiceTest {
 
     @Test
     public void findByLastName() {
-        when(ownerRepository.findByLastName(any(String.class))).thenReturn(owner1);
+        Set<Owner> owners = new HashSet<>();
+        owners.add(owner1);
+        when(ownerRepository.findByLastName(any(String.class))).thenReturn(owners);
 
-        Owner searchOwner = ownerJpaService.findByLastName(FIRST_OWNER_LAST_NAME);
-        assertTrue(FIRST_OWNER_FIRST_NAME.equals(searchOwner.getFirstName()));
+        Collection<Owner> searchOwner = ownerJpaService.findByLastName(FIRST_OWNER_LAST_NAME);
+        assertTrue(FIRST_OWNER_FIRST_NAME.equals(searchOwner.iterator().next().getFirstName()));
         verify(ownerRepository, times(1)).findByLastName(FIRST_OWNER_LAST_NAME);
     }
 

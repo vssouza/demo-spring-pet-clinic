@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collection;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -141,11 +142,13 @@ public class OwnerMapServiceTest {
 
     @Test
     public void findByLastName() {
-        Owner firstOwner = ownerMapService.findByLastName(FIRST_OWNER_LAST_NAME);
+        Collection<Owner> firstOwnerSearchResult = ownerMapService.findByLastName(FIRST_OWNER_LAST_NAME);
+        Owner firstOwner = firstOwnerSearchResult.iterator().next();
         assertEquals(FIRST_OWNER_LAST_NAME, firstOwner.getLastName());
         assertEquals(FIRST_OWNER_FIRST_NAME, firstOwner.getFirstName());
 
-        Owner secondOwner = ownerMapService.findByLastName(SECOND_OWNER_LAST_NAME);
+        Collection<Owner> secondOwnerSearchResult = ownerMapService.findByLastName(SECOND_OWNER_LAST_NAME);
+        Owner secondOwner = secondOwnerSearchResult.iterator().next();
         assertEquals(SECOND_OWNER_FIRST_NAME, secondOwner.getFirstName());
         assertEquals(SECOND_OWNER_LAST_NAME, secondOwner.getLastName());
     }

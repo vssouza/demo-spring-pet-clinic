@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,8 +25,13 @@ public class OwnerJpaService implements OwnerService {
     private final PetService petService;
 
     @Override
-    public Owner findByLastName(final String lastName) {
+    public Collection<Owner> findByLastName(final String lastName) {
         return ownerRepository.findByLastName(lastName);
+    }
+
+    @Override
+    public Collection<Owner> findByLastNameLike(final String lastName) {
+        return ownerRepository.findByLastNameContainingIgnoreCase(lastName);
     }
 
     @Override
