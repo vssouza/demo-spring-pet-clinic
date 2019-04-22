@@ -34,12 +34,6 @@ public class OwnerController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @RequestMapping(path={"", "/index", "/index.html"})
-    public String listOwners(final Model model) {
-        model.addAttribute("owners", ownerService.findAll());
-        return "owners/index";
-    }
-
     @GetMapping("/{ownerId}")
     public ModelAndView getOwner(@PathVariable ("ownerId") Long ownerId) {
         ModelAndView modelAndView = new ModelAndView("owners/ownerDetails");

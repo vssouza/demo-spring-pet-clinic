@@ -2,6 +2,7 @@ package com.example.demo.spring.petclinic.controller;
 
 import com.example.demo.spring.petclinic.model.Owner;
 import com.example.demo.spring.petclinic.service.OwnerService;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,17 +55,6 @@ public class OwnerControllerTest {
     }
 
     @Test
-    public void getOwnersPage() throws Exception {
-        mockMvc.perform(get("/owners/index"))
-                .andExpect(status().isOk())
-        .andExpect(view().name("owners/index"))
-        .andExpect(model().attribute("owners", hasSize(2)));
-
-        verify(ownerService).findAll();
-
-    }
-
-    @Test
     public void getOwner() throws Exception {
         when(ownerService.findById(anyLong())).thenReturn(Owner.builder().id(1L).build());
         mockMvc.perform(get("/owners/1"))
@@ -72,6 +62,8 @@ public class OwnerControllerTest {
                 .andExpect(view().name("owners/ownerDetails"))
                 .andExpect(model().attributeExists("owner"))
                 .andExpect(model().attribute("owner", hasProperty("id", is(1L))));
+
+        verify(ownerService).findById(anyLong());
     }
 
     @Test
@@ -90,6 +82,8 @@ public class OwnerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/findOwners"))
                 .andExpect(model().hasErrors());
+
+        verify(ownerService).findByLastNameLike(anyString());
     }
 
     @Test
@@ -100,5 +94,7 @@ public class OwnerControllerTest {
                 .andExpect(view().name("owners/ownersList"))
                 .andExpect(model().attributeExists("selections"))
                 .andExpect(model().attribute("selections", hasSize(2)));
+
+        verify(ownerService).findByLastNameLike(StringUtils.EMPTY);
     }
 }
