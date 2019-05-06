@@ -35,6 +35,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <jaxb.version>2.3.0</jaxb.version>
+        <javax.activation.version>1.1.1</javax.activation.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <start-class>com.example.demo.spring.petclinic.DemoSpringPetClinicApplication</start-class>
@@ -63,7 +64,7 @@
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
-            <version>1.1.1</version>
+            <version>${javax.activation.version}</version>
         </dependency>
     </dependencies>
 
