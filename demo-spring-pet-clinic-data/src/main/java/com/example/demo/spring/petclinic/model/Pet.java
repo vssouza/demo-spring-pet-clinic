@@ -1,13 +1,21 @@
 package com.example.demo.spring.petclinic.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "pets")
@@ -36,6 +44,7 @@ public class Pet extends BaseEntity{
     private Set<Visit> visits;
 
     public Pet() {
+        birthDate = LocalDate.now();
         visits = new HashSet<>();
     }
 
